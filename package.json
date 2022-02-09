@@ -1,7 +1,7 @@
 {
   "name": "jsonschema2ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "A project to get typescript files from mongo json schema derived from Mongo Compass",
   "main": "src/main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,9 +10,24 @@
     "cleanAll": "npm run clean & rm -rf node_modules"
   },
   "author": "Divyesh Sharma",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "class-transformer": "^0.5.1",
     "typescript": "^4.5.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsharma3/jsonschema2ts.git"
+  },
+  "keywords": [
+    "jsonshema2ts",
+    "|",
+    "mongoose",
+    "schema",
+    "json."
+  ],
+  "bugs": {
+    "url": "https://github.com/dsharma3/jsonschema2ts/issues"
+  },
+  "homepage": "https://github.com/dsharma3/jsonschema2ts#readme"
 }
