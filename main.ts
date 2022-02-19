@@ -8,14 +8,15 @@ class JsonSchemaToTsConverter{
     typeCount = 1;
 
     interfaceTypeMapping = {
-                    "String":"String",
-                    "Document": "Object",
+                    "String":"string",
+                    "Document": "object",
                     "Undefined" : "undefined",
-                    "Int32":"Number",
-                    "ObjectID": "ObjectId",
-                    "Double":"Number",
+                    "Int32":"number",
+                    "ObjectID": "string",
+                    "Double":"number",
                     "Date":"Date",
-                    "Null":"null"
+                    "Null":"null",
+                    "Array":"Array"
                 };
     schemaTypeMapping = {
         "String":"String",
@@ -25,7 +26,8 @@ class JsonSchemaToTsConverter{
         "ObjectID": "Schema.Types.ObjectId",
         "Double":"Number",
         "Date":"Date",
-        "Null":"null"
+        "Null":"null",
+        "Array":"Array"
     }
     JsonSchemaToTsConverter(){
        
@@ -34,12 +36,13 @@ class JsonSchemaToTsConverter{
     generateInterface(){
         this.json = this.schema.jsonSchema;
         this.jsonSchema = plainToInstance(Welcome,this.json);
-        let interfaceString: string = "interface Type" + this.typeCount++ +  " extends Document{"
-      
+
+        let interfaceString: string = "import { Schema, Document, model } from 'mongoose';\n\n"
+        interfaceString += "interface Type" + this.typeCount++ +  " extends Document{"
         this.jsonSchema.fields.forEach((field:WelcomeField) => {
-            if(field.name.indexOf("_") != 0){
+            //if(field.name.indexOf("_") != 0){
                 interfaceString+=this.getFields(field);
-            }
+            //}
         });
         interfaceString+="}\n\n";
         console.log(interfaceString);
@@ -51,9 +54,9 @@ class JsonSchemaToTsConverter{
         let schemaString: string = "const type" + this.typeCount++ +  " = new Schema({"
       
         this.jsonSchema.fields.forEach((field:WelcomeField) => {
-            if(field.name.indexOf("_") != 0){
+            //if(field.name.indexOf("_") != 0){
                 schemaString+=this.getSchemaFields(field);
-            }
+            //}
         });
         schemaString+="});\n\n";
         console.log(schemaString);
@@ -86,6 +89,7 @@ class JsonSchemaToTsConverter{
             if(typeString.indexOf(this.interfaceTypeMapping[type]) == -1)
                 typeString += this.interfaceTypeMapping[type] + "|";
         });
+        //typeString = typeString.replace("undefined|","").replace("|undefined", "").replace("null|","").replace("|null","");
         return typeString.substring(0, typeString.lastIndexOf("|"));
     }
 }
